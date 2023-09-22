@@ -1,0 +1,23 @@
+{
+  "presets": [
+    [
+      "@babel/preset-env",
+      {
+        "targets": {
+          "edge": "17",
+          "chrome": "67",
+          "safari": "11.1"
+        },
+        "useBuiltIns": "usage",
+        "corejs": "3.6.5"
+      }
+    ],
+    [
+      "@babel/preset-react",
+      {
+        "runtime": "automatic" // 使用新的自动运行时，不需要在React文件中导入React来使用JSX。
+      }
+    ],
+    ["@babel/preset-typescript"]
+  ]
+}
