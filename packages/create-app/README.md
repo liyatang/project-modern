@@ -1,4 +1,4 @@
-# @lib/app
+# @lib/create-app
 
 `app-scripts start` 启动项目
 

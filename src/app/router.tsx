@@ -11,7 +11,7 @@ const requireContext = require['context'](
   // 只会包括以 `.tsx` 结尾的文件
   /\.page\.tsx$/,
   // 异步加载
-  'lazy'
+  'lazy',
 );
 
 const pages = requireContext.keys().map((page) => {
@@ -42,7 +42,7 @@ const routes: RouteObject[] = [
 ];
 
 const router = createBrowserRouter(routes, {
-  basename: '/app',
+  basename: '/',
 });
 
 const AppRouter = () => <RouterProvider router={router} />;

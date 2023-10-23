@@ -1,3 +1,3 @@
 module.exports = {
-  extends: [require.resolve('@lib/app/.stylelintrc')],
+  extends: [require.resolve('@lib/create-app/.stylelintrc')],
 };

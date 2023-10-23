@@ -1,4 +1,4 @@
-const config = require('@lib/app/.prettierrc');
+const config = require('@lib/create-app/.prettierrc');
 
 module.exports = {
   ...config
