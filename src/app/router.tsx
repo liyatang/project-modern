@@ -1,5 +1,5 @@
 import { lazy, Suspense } from 'react';
-import { createBrowserRouter, RouterProvider, Navigate } from 'react-router-dom';
+import { createHashRouter, RouterProvider, Navigate } from 'react-router-dom';
 import type { RouteObject } from 'react-router-dom';
 
 const requireContext = require['context'](
@@ -41,7 +41,7 @@ const routes: RouteObject[] = [
   ...pages,
 ];
 
-const router = createBrowserRouter(routes, {
+const router = createHashRouter(routes, {
   basename: '/',
 });
 

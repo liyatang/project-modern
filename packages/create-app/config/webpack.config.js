@@ -18,20 +18,20 @@ function getCss(options = { modules: false }) {
         modules: options.modules,
       },
     },
-    // {
-    //   loader: require.resolve('postcss-loader'),
-    //   options: {
-    //     postcssOptions: {
-    //       ident: 'postcss',
-    //       plugins: [
-    //         require('tailwindcss'),
-    //         require('postcss-preset-env')({
-    //           stage: 3,
-    //         }),
-    //       ],
-    //     },
-    //   },
-    // },
+    {
+      loader: require.resolve('postcss-loader'),
+      options: {
+        postcssOptions: {
+          ident: 'postcss',
+          plugins: [
+            require('tailwindcss'),
+            require('postcss-preset-env')({
+              stage: 3,
+            }),
+          ],
+        },
+      },
+    },
   ];
 }
 
@@ -91,7 +91,7 @@ const config = {
                 },
               },
             ],
-            include: [PATH.srcPath],
+            include: [PATH.srcPath, PATH.packagesPath],
           },
           {
             test: /\.module\.css$/,
@@ -116,6 +116,17 @@ const config = {
               limit: 10000,
               name: 'media/image/[name].[hash:8].[ext]',
             },
+          },
+          {
+            test: /\.(png|jpe?g|gif)$/i,
+            use: [
+              {
+                loader: require.resolve('file-loader'),
+                options: {
+                  name: 'media/image/[name].[hash:8].[ext]',
+                },
+              },
+            ],
           },
           // {
           //   test: /\/svg\/(\w|\W)+\.svg$/,

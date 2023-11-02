@@ -10,6 +10,7 @@ const publicPath = path.resolve(rootPath, 'public');
 const srcPath = path.resolve(rootPath, 'src');
 const srcIndexPath = path.resolve(rootPath, 'src/index');
 const indexTemplatePath = path.resolve(rootPath, 'src/index.html');
+const packagesPath = path.resolve(rootPath, 'packages');
 
 const PATH = {
   rootPath,
@@ -18,6 +19,7 @@ const PATH = {
   srcIndexPath,
   publicPath,
   indexTemplatePath,
+  packagesPath,
 };
 
 function shellExec(com) {
