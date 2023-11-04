@@ -5,6 +5,7 @@ import './edge';
 
 function commonUse(graph) {
   graph.use(
+    // 对齐线
     new Snapline({
       enabled: true,
     }),

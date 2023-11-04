@@ -13,15 +13,14 @@ const Demo = () => {
       container: refDom.current,
     });
 
-    flowGraph.addNode({
-      id: 'node1',
+    const node1 = flowGraph.addNode({
       shape: 'flow-node',
       x: 40,
       y: 40,
       label: 'hello',
     });
-    flowGraph.addNode({
-      id: 'node2',
+
+    const node2 = flowGraph.addNode({
       shape: 'flow-node',
       x: 160,
       y: 180,
@@ -30,9 +29,13 @@ const Demo = () => {
 
     flowGraph.addEdge({
       shape: 'flow-edge',
-      source: 'node1',
-      target: 'node2',
+      source: node1.id,
+      target: node2.id,
       label: 'x6',
+    });
+
+    flowGraph.on('node:click', ({ node }) => {
+      console.log('node:click', node);
     });
   }, []);
 
