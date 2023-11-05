@@ -33,6 +33,9 @@ function FlowGraphApp(props: FlowGraphAppProps) {
     if (refReady.current) {
       refReady.current(flowGraph);
     }
+
+    // @ts-ignore
+    window.__x6_instances__ = [flowGraph];
   }, []);
 
   return (
