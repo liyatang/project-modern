@@ -1,17 +1,49 @@
-import { useEffect, useRef } from 'react';
-import { FlowGraph } from '@lib/flow';
+import { useCallback, useEffect, useRef } from 'react';
+import { FlowGraph, DndWrap } from '@lib/flow';
 
 const Demo = () => {
-  const refDom = useRef<HTMLDivElement>(null);
+  const refDom = useRef<HTMLDivElement | null>(null);
+  const refDndDom = useRef<HTMLDivElement | null>(null);
+  const refFlowGraph = useRef<FlowGraph | null>(null);
 
-  useEffect(() => {
-    if (!refDom.current) {
+  const handleStartDrag = useCallback((e) => {
+    if (!refFlowGraph.current || !refFlowGraph.current.dnd) {
       return;
     }
 
-    const flowGraph = new FlowGraph({
-      container: refDom.current,
+    const node = refFlowGraph.current.createNode({
+      width: 100,
+      height: 40,
+      label: 'Rect',
+      attrs: {
+        body: {
+          stroke: '#8f8f8f',
+          strokeWidth: 1,
+          fill: '#fff',
+          rx: 6,
+          ry: 6,
+        },
+      },
     });
+
+    refFlowGraph.current.dnd.start(node, e.nativeEvent);
+  }, []);
+
+  useEffect(() => {
+    if (!refDom.current || !refDndDom.current) {
+      return;
+    }
+
+    const flowGraph = new FlowGraph(
+      {
+        container: refDom.current,
+      },
+      {
+        dndContainer: refDndDom.current,
+      },
+    );
+
+    refFlowGraph.current = flowGraph;
 
     const node1 = flowGraph.addNode({
       shape: 'flow-node',
@@ -40,8 +72,13 @@ const Demo = () => {
   }, []);
 
   return (
-    <div className="h-full w-full">
-      <div ref={refDom} />
+    <div className="flex h-full w-full">
+      <div className="h-full w-[300px]">
+        <DndWrap onStartDrag={handleStartDrag} ref={refDndDom} />
+      </div>
+      <div className="h-full flex-1">
+        <div ref={refDom} />
+      </div>
     </div>
   );
 };

@@ -3,6 +3,8 @@ import { Snapline } from '@antv/x6-plugin-snapline';
 import { Clipboard } from '@antv/x6-plugin-clipboard';
 import { Selection } from '@antv/x6-plugin-selection';
 import { Keyboard } from '@antv/x6-plugin-keyboard';
+import { History } from '@antv/x6-plugin-history';
+import { Dnd } from '@antv/x6-plugin-dnd';
 import { KeyCommand } from './key_command';
 import './node';
 import './edge';
@@ -38,15 +40,26 @@ function commonOption(): Graph.Options {
   };
 }
 
+interface FlowGraphOptions {
+  dndContainer: HTMLElement;
+}
+
 class FlowGraph extends Graph {
-  constructor(options: Graph.Options) {
+  dndContainer: HTMLElement;
+  dnd: Dnd | null = null;
+
+  constructor(options: Graph.Options, otherOptions: FlowGraphOptions) {
     super({
       ...commonOption(),
       ...options,
     });
 
+    this.dndContainer = otherOptions.dndContainer;
+
     this.pCommonUse();
     this.pCommonEvent();
+
+    this.pDnd();
 
     // 画布容纳所有元素
     this.zoomToFit({ maxScale: 1 });
@@ -83,6 +96,9 @@ class FlowGraph extends Graph {
         enabled: true,
       }),
     );
+
+    // 历史记录
+    this.use(new History({ enabled: true }));
   }
 
   private pCommonEvent() {
@@ -102,7 +118,28 @@ class FlowGraph extends Graph {
       }
       return false;
     });
+
+    this.bindKey(KeyCommand.UNDO, () => {
+      if (this.canUndo()) {
+        this.undo();
+      }
+    });
+
+    this.bindKey(KeyCommand.REDO, () => {
+      if (this.canRedo()) {
+        this.redo();
+      }
+    });
+  }
+
+  private pDnd() {
+    this.dnd = new Dnd({
+      target: this,
+      scaled: false,
+      dndContainer: this.dndContainer,
+    });
   }
 }
 
 export { FlowGraph };
+export type { Graph };
