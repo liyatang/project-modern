@@ -198,9 +198,6 @@ importers:
       '@antv/x6-plugin-clipboard':
         specifier: ^2.1.6
         version: 2.1.6(@antv/x6@2.15.3)
-      '@antv/x6-plugin-dnd':
-        specifier: ^2.1.1
-        version: 2.1.1(@antv/x6@2.15.3)
       '@antv/x6-plugin-history':
         specifier: ^2.2.4
         version: 2.2.4(@antv/x6@2.15.3)
@@ -213,6 +210,9 @@ importers:
       '@antv/x6-plugin-snapline':
         specifier: ^2.1.7
         version: 2.1.7(@antv/x6@2.15.3)
+      '@antv/x6-plugin-stencil':
+        specifier: ^2.1.4
+        version: 2.1.4(@antv/x6@2.15.3)
 
   packages/tool: {}
 
@@ -350,6 +350,15 @@ packages:
       '@antv/x6': ^2.x
     dependencies:
       '@antv/x6': 2.15.3
+    dev: false
+
+  /@antv/x6-plugin-stencil@2.1.4(@antv/x6@2.15.3):
+    resolution: {integrity: sha512-/hCrf7h7Vg3Gb9X1ent5cg3sMTUaJoZWQC9NUp9S0KLTtDgYn0KMajZJLNpKPTyK8mNnEjffWZ/skcZBQd1NwA==}
+    peerDependencies:
+      '@antv/x6': ^2.x
+    dependencies:
+      '@antv/x6': 2.15.3
+      '@antv/x6-plugin-dnd': 2.1.1(@antv/x6@2.15.3)
     dev: false
 
   /@antv/x6@2.15.3:
