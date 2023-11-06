@@ -131,23 +131,14 @@ const config = {
               },
             ],
           },
-          // {
-          //   test: /\/svg\/(\w|\W)+\.svg$/,
-          //   use: [
-          //     {
-          //       loader: '@svgr/webpack',
-          //       options: {
-          //         icon: true,
-          //         expandProps: 'start',
-          //         svgProps: {
-          //           fill: 'currentColor',
-          //           // className 冗余
-          //           className: "{'gm-svg-icon t-svg-icon m-svg-icon ' + (props.className || '')}",
-          //         },
-          //       },
-          //     },
-          //   ],
-          // },
+          {
+            test: /\.svg$/,
+            use: [
+              {
+                loader: require.resolve('@svgr/webpack'),
+              },
+            ],
+          },
         ],
       },
     ],
