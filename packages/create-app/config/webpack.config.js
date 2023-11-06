@@ -7,6 +7,9 @@ const WebpackBar = require('webpackbar');
 const CaseSensitivePathsPlugin = require('case-sensitive-paths-webpack-plugin');
 // const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
 // const TsconfigPathsPlugin = require('tsconfig-paths-webpack-plugin');
+const { mergeProjectWebpackConfig } = require('./merge_project');
+
+require('./env');
 
 function getCss(options = { modules: false }) {
   return [
@@ -166,4 +169,6 @@ const config = {
   ].filter(Boolean),
 };
 
-module.exports = config;
+const newConfig = mergeProjectWebpackConfig(config);
+
+module.exports = newConfig;
