@@ -24,11 +24,13 @@
     "lodash-es": "^4.17.21",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "react-router-dom": "^6.16.0"
+    "react-router-dom": "^6.16.0",
+    "zustand": "^4.4.6"
   },
   "devDependencies": {
     "@lib/create-app": "workspace:^",
     "@lib/flow": "workspace:^",
+    "@lib/frame": "workspace:^",
     "@lib/tool": "workspace:^",
     "@types/node": "^20.8.4",
     "@types/react": "^18.2.28",
