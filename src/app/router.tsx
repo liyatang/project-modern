@@ -1,50 +1,10 @@
-import { lazy, Suspense } from 'react';
-import { createHashRouter, RouterProvider, Navigate } from 'react-router-dom';
-import type { RouteObject } from 'react-router-dom';
+import { Suspense } from 'react';
+import { useRoutes } from 'react-router-dom';
+// @ts-ignore
+import routes from '~react-pages';
 
-const requireContext = require['context'](
-  // 组件目录的相对路径
-  '../pages',
-  // 是否查询子目录
-  true,
-  // 组件文件名的正则表达式
-  // 只会包括以 `.tsx` 结尾的文件
-  /\.page\.tsx$/,
-  // 异步加载
-  'lazy',
-);
-
-const pages = requireContext.keys().map((page) => {
-  // ./home/index.page.tsx => /home
-  // slice(1, -9)
-  const path = page.slice(1, -15);
-
-  // lazy
-  const Element = lazy(() => requireContext(page));
-
-  return {
-    path,
-    element: (
-      <Suspense fallback={<></>}>
-        {/* 挂个 data-path，便于排查问题 */}
-        <Element key={path} data-path={path} />
-      </Suspense>
-    ),
-  };
-});
-
-const routes: RouteObject[] = [
-  {
-    path: '/',
-    element: <Navigate to="/home" />,
-  },
-  ...pages,
-];
-
-const router = createHashRouter(routes, {
-  basename: '/',
-});
-
-const AppRouter = () => <RouterProvider router={router} />;
+const AppRouter = () => {
+  return <Suspense fallback={<div>Loading...</div>}>{useRoutes(routes)}</Suspense>;
+};
 
 export default AppRouter;
