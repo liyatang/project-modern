@@ -1,8 +1,9 @@
+import { create } from 'zustand';
 import { devtools } from 'zustand/middleware';
 import type { State, StateCreator, StoreMutatorIdentifier } from 'zustand';
 
-// 搞不懂，抄作业的 https://docs.pmnd.rs/zustand/guides/typescript#middleware-that-doesn't-change-the-store-type
-
+// 有点复杂，抄作业
+// https://docs.pmnd.rs/zustand/guides/typescript#middleware-that-doesn't-change-the-store-type
 type CommonMiddlewares = <
   T extends State,
   Mps extends [StoreMutatorIdentifier, unknown][] = [],
@@ -23,4 +24,17 @@ const commonMiddlewaresImpl: CommonMiddlewaresImpl = (f) => (set, get, store) =>
   return creator(set, get, store);
 };
 
-export const commonMiddlewares = commonMiddlewaresImpl as unknown as CommonMiddlewares;
+const commonMiddlewares = commonMiddlewaresImpl as unknown as CommonMiddlewares;
+
+/** 封装 createStore，统一入口和中间件 */
+const createStore = (<T>(createState) => {
+  if (createState) {
+    return create<T>()(commonMiddlewares(createState));
+  }
+
+  return (createState: StateCreator<T, [], []>) => {
+    return create<T>()(commonMiddlewares(createState));
+  };
+}) as typeof create;
+
+export { createStore };

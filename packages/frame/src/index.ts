@@ -1,1 +1,1 @@
-export { commonMiddlewares } from './zustand';
+export { createStore } from './zustand';

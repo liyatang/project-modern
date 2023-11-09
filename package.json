@@ -14,8 +14,7 @@
     "prepare": "husky install",
     "preinstall": "npx only-allow pnpm",
     "clean": "rm -rf pnpm-lock.yaml node_modules **/*/node_modules",
-    "start": "vite",
-    "dev": "vite",
+    "dev": "vite --port 8080",
     "build": "vite build"
   },
   "dependencies": {
