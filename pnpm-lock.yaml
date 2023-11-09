@@ -8,6 +8,9 @@ importers:
 
   .:
     dependencies:
+      '@ant-design/icons':
+        specifier: ^5.2.6
+        version: 5.2.6(react-dom@18.2.0)(react@18.2.0)
       '@micro-zoe/micro-app':
         specifier: 1.0.0-rc.1
         version: 1.0.0-rc.1

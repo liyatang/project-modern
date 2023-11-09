@@ -19,6 +19,7 @@
     "build": "vite build"
   },
   "dependencies": {
+    "@ant-design/icons": "^5.2.6",
     "@micro-zoe/micro-app": "1.0.0-rc.1",
     "antd": "^5.10.2",
     "lodash-es": "^4.17.21",

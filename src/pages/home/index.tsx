@@ -1,6 +1,7 @@
 import { Button } from 'antd';
-import { useHomeStore } from './store';
+import { StepForwardOutlined } from '@ant-design/icons';
 import { useEffect } from 'react';
+import { useHomeStore } from './store';
 // import Map from './map.svg';
 
 // 打印环境变量
@@ -19,7 +20,10 @@ const Home = () => {
   return (
     <div>
       <h1>Home</h1>
-      <Button>button</Button>
+      {/* TODO: @yt button样式影响 */}
+      <Button type="primary" icon={<StepForwardOutlined />}>
+        button
+      </Button>
       <div className="h-10 w-10 bg-black" />
       <div>my name is {name}</div>
     </div>
