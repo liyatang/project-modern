@@ -11,3 +11,4 @@ _*
 browserslist
 LICENSE
 package*.json
+pnpm-lock.yaml
