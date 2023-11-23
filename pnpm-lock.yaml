@@ -190,7 +190,17 @@ importers:
         specifier: ^4.4.6
         version: 4.4.6(@types/react@18.2.37)(react@18.2.0)
 
-  packages/tool: {}
+  packages/tool:
+    dependencies:
+      lodash-es:
+        specifier: ^4.17.21
+        version: 4.17.21
+      react:
+        specifier: ^18.2.0
+        version: 18.2.0
+      react-router-dom:
+        specifier: ^6.16.0
+        version: 6.18.0(react-dom@18.2.0)(react@18.2.0)
 
 packages:
 

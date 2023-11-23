@@ -1,23 +1,11 @@
-import type { ReactNode } from 'react';
-import { Suspense, lazy } from 'react';
 import { useRoutes, Navigate } from 'react-router-dom';
+import type { RouteObject } from 'react-router-dom';
+import { modulesToRoutes } from '@lib/tool';
 
 // 默认懒加载，构建时分离为独立 chunk
-const modules = import.meta.glob('../pages/**/index.tsx');
+const modules = import.meta.glob(['../pages/**/index.page.tsx', '../pages/**/layout.tsx']);
 
-const pages: { path: string; element: ReactNode }[] = [];
-
-for (const file in modules) {
-  const module: () => Promise<any> = modules[file];
-
-  const path = file.replace('../pages', '').replace('/index.tsx', '');
-  const Element = lazy(module);
-
-  pages.push({
-    path,
-    element: <Element key={path} data-path={path} />,
-  });
-}
+const pages: RouteObject[] = modulesToRoutes(modules);
 
 const routes = [
   {
@@ -27,6 +15,6 @@ const routes = [
   ...pages,
 ];
 
-const AppRouter = () => <Suspense fallback={<>loading</>}>{useRoutes(routes)}</Suspense>;
+const AppRouter = () => useRoutes(routes);
 
 export default AppRouter;
