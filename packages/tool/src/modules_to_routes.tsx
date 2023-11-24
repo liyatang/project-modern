@@ -4,24 +4,31 @@ import type { RouteObject } from 'react-router-dom';
 
 /*
 const modules = {
-  '../pages/account/index.page.tsx': () => '../pages/account/index.page.tsx',
-  '../pages/account/layout.tsx': () => '../pages/account/layout.tsx',
-  '../pages/account/info/index.page.tsx': () => '../pages/account/info/index.page.tsx',
+  './pages/demo/index.page.tsx': () => import('./pages/demo/index.page.tsx'),
+  './pages/demo/layout.tsx': () => import('./pages/demo/layout.tsx'),
+  './pages/demo/info/index.page.tsx': () => import('./pages/demo/info/index.page.tsx'),
 };
+后面 import('xxx') 统一使用 Module 表示
 */
 type Modules = Record<string, () => Promise<any>>;
 
 /*
 const pathModules = {
   account: {
-    path: 'account',
-    module: () => '../pages/account/layout.tsx',
+    path: 'demo',
+    module: Module,
     children: {
-      '': () => '../pages/account/index.page.tsx',
+      '': {
+        index: true
+        module: Module
+      },
       info: {
         path: 'info',
         children: {
-          '': () => '../pages/account/info/index.page.tsx'
+          '': {
+            index: true
+            module: Module
+          }
         }
       }
     }
@@ -46,27 +53,49 @@ function modulesToPathModules(modules: Modules): PathModules {
   Object.keys(modules).forEach((key) => {
     const module: () => Promise<any> = modules[key];
 
+    // 如果是 layout
     if (key.includes('/layout.tsx')) {
+      // ./pages/demo/layout.tsx => /demo
+      // ./pages/demo/info/layout.tsx => /demo/info
       const path = key.split('/pages').pop()!.replace('/layout.tsx', '');
 
+      // /demo => demo => demo
+      // /demo/info => demo/info => demo.children.info
       const setPath = path.slice(1).replace(/\//g, '.children.');
+
+      // demo => demo
+      // demo/info => info
       let lastPath = path.split('/').slice(-1)[0];
+
+      // [uuid] => uuid
       if (lastPath.startsWith('[') && lastPath.endsWith(']')) {
         lastPath = `${lastPath.slice(1, -1)}`;
       }
 
       set(pathModules, `${setPath}.path`, lastPath);
       set(pathModules, `${setPath}.module`, module);
-    } else if (key.includes('/index.page.tsx')) {
+    }
+    // 同理
+    else if (key.includes('/index.page.tsx')) {
+      // ./pages/demo/index.page.tsx => /demo
+      // ./pages/demo/info/index.page.tsx => /demo/info
       const path = key.split('/pages').pop()!.replace('/index.page.tsx', '');
 
+      // /demo => demo => demo
+      // /demo/info => demo/info => demo.children.info
       const setPath = path.slice(1).replace(/\//g, '.children.');
+
+      // demo => demo
+      // demo/info => info
       let lastPath = path.split('/').slice(-1)[0];
+
+      // [uuid] => uuid
       if (lastPath.startsWith('[') && lastPath.endsWith(']')) {
         lastPath = `${lastPath.slice(1, -1)}`;
       }
 
       set(pathModules, `${setPath}.path`, lastPath);
+      // 见 react-router Router index
       set(pathModules, `${setPath}.children..index`, true);
       set(pathModules, `${setPath}.children..module`, module);
     }
@@ -77,26 +106,20 @@ function modulesToPathModules(modules: Modules): PathModules {
 
 function pathModulesToValues(pathModules): PathModulesValues {
   function valuesDeep(obj: PathModules) {
+    // {demo home} => [demo, home]
     const arr = Object.values(obj);
-    // 递归
+
+    // 递归遍历 children
     return arr.map((item) => {
       if (item.children) {
         return { ...item, children: valuesDeep(item.children) };
       }
+
       return item;
     });
   }
 
   return valuesDeep(pathModules);
-}
-
-function createElement({ module }) {
-  const Element = lazy(module);
-  return (
-    <Suspense>
-      <Element />
-    </Suspense>
-  );
 }
 
 function moduleToElement(pathModulesValues: PathModulesValues): RouteObject[] {
@@ -109,7 +132,12 @@ function moduleToElement(pathModulesValues: PathModulesValues): RouteObject[] {
 
       // 如果有 layout
       if (item.module) {
-        route.element = createElement({ module: item.module });
+        const Element = lazy(item.module);
+        route.element = (
+          <Suspense fallback={<></>}>
+            <Element />
+          </Suspense>
+        );
       }
 
       // 处理 children

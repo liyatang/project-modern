@@ -1,19 +1,15 @@
 import { useRoutes, Navigate } from 'react-router-dom';
-import type { RouteObject } from 'react-router-dom';
-import { modulesToRoutes } from '@lib/tool';
-
-// 默认懒加载，构建时分离为独立 chunk
-const modules = import.meta.glob(['../pages/**/index.page.tsx', '../pages/**/layout.tsx']);
-
-const pages: RouteObject[] = modulesToRoutes(modules);
+import { pagesRoutes, PagesRoutes } from 'virtual:react-pages';
 
 const routes = [
   {
     path: '/',
-    element: <Navigate to="/home" />,
+    element: <Navigate to={PagesRoutes.HOME} />,
   },
-  ...pages,
+  ...pagesRoutes,
 ];
+
+console.log('routes', routes);
 
 const AppRouter = () => useRoutes(routes);
 

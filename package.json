@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "## 选型",
   "main": "index.js",
+  "packageManager": "^pnpm@8.7.6",
   "private": true,
   "author": "",
   "license": "ISC",
@@ -23,10 +24,13 @@
     "@micro-zoe/micro-app": "1.0.0-rc.1",
     "ahooks": "^3.7.8",
     "antd": "^5.10.2",
+    "fs-extra": "^11.1.1",
     "lodash-es": "^4.17.21",
+    "path": "^0.12.7",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.16.0",
+    "typescript": "^5.3.2",
     "umi-request": "^1.4.0",
     "zustand": "^4.4.6"
   },
@@ -39,6 +43,7 @@
     "@types/node": "^20.8.4",
     "@types/react": "^18.2.28",
     "@types/react-dom": "^18.2.12",
-    "core-js": "^3.32.2"
+    "core-js": "^3.32.2",
+    "vite-plugin-react-router-pages": "^1.0.1"
   }
 }
