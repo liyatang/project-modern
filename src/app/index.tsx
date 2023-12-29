@@ -1,8 +1,16 @@
-import { BrowserRouter as Router } from 'react-router-dom';
-
-// App 组件主入口
-import AppRoute from './router';
+import { BrowserRouter as Router, useRoutes, Navigate } from 'react-router-dom';
 import { StrictMode } from 'react';
+import { pagesRoutes, PagesRoutes } from 'virtual:react-pages';
+
+const routes = [
+  {
+    path: '/',
+    element: <Navigate to={PagesRoutes.HOME} />,
+  },
+  ...pagesRoutes,
+];
+
+const AppRoute = () => useRoutes(routes);
 
 const App = () => {
   return (

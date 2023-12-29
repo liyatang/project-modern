@@ -1,5 +1,5 @@
-const config = require('@lib/create-app/.prettierrc');
-
 module.exports = {
-  ...config
-};
+  printWidth: 100,
+  singleQuote: true,
+  plugins: ['prettier-plugin-tailwindcss']
+};;

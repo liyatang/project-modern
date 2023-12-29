@@ -8,7 +8,7 @@ module.exports = {
   },
   parser: '@typescript-eslint/parser', // 指定 ESLint 解析器
   parserOptions: {
-    ecmaVersion: 'latest', // 启用 ES2021 语法支持
+    ecmaVersion: 'latest', // 启用 最新 语法支持
     sourceType: 'module', // 启用 ECMAScript 模块语法
     ecmaFeatures: {
       jsx: true, // 启用 JSX 语法支持
